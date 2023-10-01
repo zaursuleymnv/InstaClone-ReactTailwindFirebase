@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import routes from "./routes";
+import {Toaster} from 'react-hot-toast'
+import { useSelector } from "react-redux";
+import { useRoutes } from "react-router-dom";
+import Loader from "./components/Loader";
+import { useEffect, useState } from "react";
+
 
 function App() {
+
+  const user = useSelector(state => state.auth.user)
+  const showRoutes = useRoutes(routes)
+
+  if(user == null) {
+    return <Loader/>
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Toaster position="top-center"/>
+      {showRoutes}
+    </>
+  )
+  
 }
 
 export default App;
